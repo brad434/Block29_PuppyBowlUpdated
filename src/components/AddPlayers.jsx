@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { TextField, Button, Select, MenuItem, FormControl, InputLabel, Box } from '@mui/material';
 
 // import React, { useEffect, useState } from 'react'
 const cohortName = "2402-FTB-ET-WEB-PT";
@@ -22,29 +23,82 @@ const Form = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ playerObj }),
       });
+
+      if (!response.ok) {
+        const errorDetails = await response.json();
+        throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorDetails.message}`);
+      }
+
       const data = await response.json();
-      return data;
       alert('Successfully added player!')
 
       setName('');
       setBreed('');
       setStatus('');
       setImageUrl('');
+      return data;
 
-      // const newPlayer = { name: name, breed: breed, status: status, imageUrl: imageUrl }
     } catch (error) {
       console.error(error)
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="text" name="name" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
-      <input type="text" name="breed" placeholder="Breed" value={breed} onChange={(e) => setBreed(e.target.value)} />
-      <input type="text" name="status" placeholder="Status" value={status} onChange={(e) => setStatus(e.target.value)} />
-      <input type="text" name="imageUrl" placeholder="Image Url" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />
-      <button type='submit'>Submit</button>
-    </form>
+    <Box
+      component="form"
+      sx={{
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+      noValidate
+      autoComplete="off"
+      onSubmit={handleSubmit}
+    >
+      <TextField
+        required
+        id="name"
+        name="name"
+        label="Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+      <TextField
+        required
+        id="breed"
+        name="breed"
+        label="Breed"
+        value={breed}
+        onChange={(e) => setBreed(e.target.value)}
+      />
+
+      <FormControl sx={{ m: 1, minWidth: 120 }}>
+        <InputLabel id="status-label">Status</InputLabel>
+        <Select
+          labelId="status-label"
+          id="status"
+          name="status"
+          value={status}
+          label="Status"
+          onChange={(e) => setStatus(e.target.value)}
+        >
+          <MenuItem value="available">Field</MenuItem>
+          <MenuItem value="adopted">Bench</MenuItem>
+        </Select>
+      </FormControl>
+      <TextField
+        required
+        id="imageUrl"
+        name="imageUrl"
+        label="Image URL"
+        value={imageUrl}
+        onChange={(e) => setImageUrl(e.target.value)}
+      />
+      <Button variant="contained" color="primary" type="submit" sx={{ m: 1 }}>
+        Submit
+      </Button>
+    </Box>
 
   )
 }

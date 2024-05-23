@@ -2,10 +2,10 @@ import { useState } from 'react'
 import './App.css'
 import SearchAppBar from './components/Navbar'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import Contact from './components/Contact'
 import GetAll from './components/getAll'
 import AddPlayers from './components/AddPlayers'
-
+import DeletePlayers from './components/DeletePlayers'
+import PlayerDetail from './components/PlayerDetail'
 
 function App() {
   return (
@@ -15,7 +15,8 @@ function App() {
         <Routes>
           <Route path={'/'} element={<GetAll />} />
           <Route path={'/addPlayer'} element={<AddPlayers />} />
-          <Route path={'/deletePlayer'} element={<Contact />} />
+          <Route path={'/player/:id'} element={<PlayerDetail />} />
+          <Route path={'/deletePlayer'} element={<DeletePlayers />} />
         </Routes>
       </Router>
     </>
