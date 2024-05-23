@@ -37,7 +37,7 @@ const GetAll = () => {
   }
 
   const handleViewDetails = (player) => {
-    navigate('/player/${player.id}', { state: { player } });
+    navigate('/player/${player.id}');
   }
 
   return (

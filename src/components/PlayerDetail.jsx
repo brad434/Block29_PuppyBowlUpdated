@@ -1,12 +1,39 @@
-import React from 'react'
-import { useLocation } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
 import { Card, CardContent, CardMedia, Typography, Button } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
+
+
+const cohortName = "2402-FTB-ET-WEB-PT";
+const API_URL = `https://fsa-puppy-bowl.herokuapp.com/api/${cohortName}/players`;
 
 const PlayerDetail = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const player = location.state?.player;
+  const { id } = useParams();
+  const [player, setPlayers] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchPlayer = async () => {
+      try {
+        const response = await fetch(`${API_URL}/${id}`);
+        const data = await response.json();
+        setPlayers(data.data.player);
+        setLoading(false);
+      } catch (error) {
+        setError(error);
+        setLoading(false);
+      }
+    };
+    fetchPlayer();
+  }, [id])
+
+  if (loading) {
+    return <div>Loading...</div>
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   if (!player) {
     return <div>No player data available</div>

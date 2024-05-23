@@ -21,7 +21,7 @@ const Form = () => {
       const response = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ playerObj }),
+        body: JSON.stringify(playerObj),
       });
 
       if (!response.ok) {
@@ -40,18 +40,17 @@ const Form = () => {
 
     } catch (error) {
       console.error(error)
+      alert('Error adding player: ${error.message}');
     }
   };
 
   return (
-    <Box
-      component="form"
-      sx={{
-        '& .MuiTextField-root': { m: 1, width: '25ch' },
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-      }}
+    <Box component="form" sx={{
+      '& .MuiTextField-root': { m: 1, width: '25ch' },
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+    }}
       noValidate
       autoComplete="off"
       onSubmit={handleSubmit}
@@ -75,26 +74,12 @@ const Form = () => {
 
       <FormControl sx={{ m: 1, minWidth: 120 }}>
         <InputLabel id="status-label">Status</InputLabel>
-        <Select
-          labelId="status-label"
-          id="status"
-          name="status"
-          value={status}
-          label="Status"
-          onChange={(e) => setStatus(e.target.value)}
-        >
-          <MenuItem value="available">Field</MenuItem>
-          <MenuItem value="adopted">Bench</MenuItem>
+        <Select labelId="status-label" id="status" name="status" value={status} label="Status" onChange={(e) => setStatus(e.target.value)}>
+          <MenuItem value="field">field</MenuItem>
+          <MenuItem value="bench">bench</MenuItem>
         </Select>
       </FormControl>
-      <TextField
-        required
-        id="imageUrl"
-        name="imageUrl"
-        label="Image URL"
-        value={imageUrl}
-        onChange={(e) => setImageUrl(e.target.value)}
-      />
+      <TextField required id="imageUrl" name="imageUrl" label="Image URL" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />
       <Button variant="contained" color="primary" type="submit" sx={{ m: 1 }}>
         Submit
       </Button>
