@@ -11,6 +11,8 @@ const PlayerDetail = () => {
   const [player, setPlayers] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     const fetchPlayer = async () => {

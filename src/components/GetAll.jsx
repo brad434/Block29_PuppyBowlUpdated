@@ -1,6 +1,7 @@
 import { CardContent, Typography, Card, CardMedia, Grid, CircularProgress, Button } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import DeletePlayers from './DeletePlayers';
 
 const cohortName = "2402-FTB-ET-WEB-PT";
 const API_URL = `https://fsa-puppy-bowl.herokuapp.com/api/${cohortName}/players`;
@@ -36,16 +37,20 @@ const GetAll = () => {
     return <div>Error: {error.message}</div>;
   }
 
-  const handleViewDetails = (player) => {
-    navigate('/player/${player.id}');
+  const handleViewDetails = (playerId) => {
+    navigate(`/player/${playerId}`);
   }
+
+  // const deletePlayer = (playerId) => {
+  //   navigate(`/player/${playerId}`)
+  // }
 
   return (
     <div>
       <Typography variant="h4" gutterBottom>
         Players List
       </Typography>
-      <Grid container spacing={3}>
+      <Grid container spacing={4} justify="center" alignItems="center">
         {players.map((player) => (
           <Grid item key={player.id} xs={12} sm={6} md={4}>
             <Card>
@@ -60,13 +65,20 @@ const GetAll = () => {
                 <Typography variant="body2" color="text.secondary">
                   Status: {player.status}
                 </Typography>
-                <Button variant="contained" color="primary" onClick={() => handleViewDetails(player)}>View Details</Button>
+                <Grid container spacing={1} justifyContent="center">
+                  <Grid item>
+                    <Button variant="contained" color="primary" onClick={() => handleViewDetails(player.id)}>View Details</Button>
+                  </Grid>
+                  <Grid item>
+                    <Button variant="contained" color="primary" onClick={() => DeletePlayers(player.id)}>Delete</Button>
+                  </Grid>
+                </Grid>
               </CardContent>
             </Card>
           </Grid>
         ))}
       </Grid>
-    </div>
+    </div >
   )
 }
 
