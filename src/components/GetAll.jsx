@@ -1,6 +1,8 @@
-import { CardContent, Typography, Card, CardMedia, Grid, CircularProgress, Button } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { CardContent, Typography, Card, CardMedia, Grid, CircularProgress, Button } from '@mui/material';
+import { selectSearchTerm } from '../slice/searchBarSlice';
 import DeletePlayers from './DeletePlayers';
 
 const cohortName = "2402-FTB-ET-WEB-PT";
@@ -11,6 +13,7 @@ const GetAll = () => {
   const [loading, setLoading] = useState(true); // improves users experience so there is a loading spinner or a message while the data is being fetched
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const searchTerm = useSelector(selectSearchTerm);
 
   useEffect(() => {
     const fetchPlayers = async () => {
@@ -37,6 +40,8 @@ const GetAll = () => {
     return <div>Error: {error.message}</div>;
   }
 
+  const filteredPlayers = players.filter(player => player.name.toLowerCase().includes(searchTerm.toLowerCase()))
+
   const handleViewDetails = (playerId) => {
     navigate(`/player/${playerId}`);
   }
@@ -51,7 +56,7 @@ const GetAll = () => {
         Players List
       </Typography>
       <Grid container spacing={4} justify="center" alignItems="center">
-        {players.map((player) => (
+        {filteredPlayers.map((player) => (
           <Grid item key={player.id} xs={12} sm={6} md={4}>
             <Card>
               <CardMedia component="img" height="140" image={player.imageUrl || 'https://via.placeholder.com/150'} alt={player.name} />

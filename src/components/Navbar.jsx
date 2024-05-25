@@ -57,9 +57,7 @@ function SearchAppBar() {
   const handleSearchChange = (event) => {
     dispatch(setSearchTerm(event.target.value))
   }
-}
 
-function SearchAppBar() {
   return (
     <AppBar position="static">
       <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
