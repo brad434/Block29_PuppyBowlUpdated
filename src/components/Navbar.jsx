@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 import InputBase from '@mui/material/InputBase';
 import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
+import { useDispatch } from 'react-redux';
+import { setSearchTerm } from '../slice/searchBarSlice';
 
 
 // Styled components for the search bar
@@ -50,6 +52,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 function SearchAppBar() {
+  const dispatch = useDispatch();
+
+  const handleSearchChange = (event) => {
+    dispatch(setSearchTerm(event.target.value))
+  }
+}
+
+function SearchAppBar() {
   return (
     <AppBar position="static">
       <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -72,6 +82,7 @@ function SearchAppBar() {
           <StyledInputBase
             placeholder="Search…"
             inputProps={{ 'aria-label': 'search' }}
+            onChange={handleSearchChange}
           />
         </Search>
       </Toolbar>
