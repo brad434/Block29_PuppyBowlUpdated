@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { CardContent, Typography, Card, CardMedia, Grid, CircularProgress, Button } from '@mui/material';
-import { selectSearchTerm } from '../slice/searchBarSlice';
+// import { setSearchTerm } from '../slice/searchBarSlice';
 import DeletePlayers from './DeletePlayers';
 
 const cohortName = "2402-FTB-ET-WEB-PT";
@@ -13,7 +13,12 @@ const GetAll = () => {
   const [loading, setLoading] = useState(true); // improves users experience so there is a loading spinner or a message while the data is being fetched
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const searchTerm = useSelector(selectSearchTerm);
+  const searchTerm = useSelector((state) => state.searchBar);
+
+  // const filteredPlayers = players.filter((player) => player.name.toLowerCase().includes(searchTerm.toLowerCase()))
+  const filteredPlayers = players.filter((player) =>
+    player.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   useEffect(() => {
     const fetchPlayers = async () => {
@@ -40,7 +45,7 @@ const GetAll = () => {
     return <div>Error: {error.message}</div>;
   }
 
-  const filteredPlayers = players.filter(player => player.name.toLowerCase().includes(searchTerm.toLowerCase()))
+  // const filteredPlayers = players.filter(player => player.name.toLowerCase().includes(searchTerm.toLowerCase()))
 
   const handleViewDetails = (playerId) => {
     navigate(`/player/${playerId}`);
@@ -75,7 +80,7 @@ const GetAll = () => {
                     <Button variant="contained" color="primary" onClick={() => handleViewDetails(player.id)}>View Details</Button>
                   </Grid>
                   <Grid item>
-                    <Button variant="contained" color="primary" onClick={() => DeletePlayers(player.id)}>Delete</Button>
+                    <Button variant="contained" color="secondary" onClick={() => DeletePlayers(player.id)}>Delete</Button>
                   </Grid>
                 </Grid>
               </CardContent>
