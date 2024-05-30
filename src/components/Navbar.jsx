@@ -66,14 +66,11 @@ function SearchAppBar() {
         <Typography variant="h5" style={{ flexGrow: 0.5 }}>
           PuppyBowl
         </Typography>
-        <Button color="inherit" component={Link} to="/">
+        <Button color="inherit" component={Link} to="/" onClick={() => dispatch(setSearchTerm(''))}>
           All Players
         </Button>
         <Button color="inherit" component={Link} to="/addPlayer">
           Add New Players
-        </Button>
-        <Button color="inherit" component={Link} to="/deletePlayer">
-          Delete Player
         </Button>
         <Search>
           <SearchIconWrapper>

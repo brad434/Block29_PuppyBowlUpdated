@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { TextField, Button, Select, MenuItem, FormControl, InputLabel, Box } from '@mui/material';
+import { useNavigate } from "react-router-dom";
 
 // import React, { useEffect, useState } from 'react'
 const cohortName = "2402-FTB-ET-WEB-PT";
@@ -10,6 +11,8 @@ const Form = () => {
   const [breed, setBreed] = useState('');
   const [status, setStatus] = useState('');
   const [imageUrl, setImageUrl] = useState('');
+  const navigate = useNavigate();
+
 
 
   const handleSubmit = async (e) => {
@@ -36,6 +39,7 @@ const Form = () => {
       setBreed('');
       setStatus('');
       setImageUrl('');
+      navigate('/')
       return data;
 
     } catch (error) {
@@ -53,7 +57,6 @@ const Form = () => {
     }}
       noValidate
       autoComplete="off"
-      onSubmit={handleSubmit}
     >
       <TextField
         required
@@ -80,7 +83,7 @@ const Form = () => {
         </Select>
       </FormControl>
       <TextField required id="imageUrl" name="imageUrl" label="Image URL" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />
-      <Button variant="contained" color="primary" type="submit" sx={{ m: 1 }}>
+      <Button variant="contained" color="primary" type="submit" sx={{ m: 1 }} onClick={handleSubmit}>
         Submit
       </Button>
     </Box>

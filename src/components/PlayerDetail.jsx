@@ -21,6 +21,7 @@ const PlayerDetail = () => {
         const data = await response.json();
         setPlayers(data.data.player);
         setLoading(false);
+        console.log(player)
       } catch (error) {
         setError(error);
         setLoading(false);
